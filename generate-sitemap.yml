@@ -1,0 +1,62 @@
+name: Generate and Deploy Sitemap
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Generate Sitemap
+        run: |
+          mkdir -p public/sitemap
+          python3 << 'EOF'
+pages = [
+    "/", 
+    "/pflanzenschutz", 
+    "/duenger-booster", 
+    "/zubehoer-tools", 
+    "/beleuchtung", 
+    "/klima-bewaesserung", 
+    "/pflanzenzucht", 
+    "/kontakt", 
+    "/konto", 
+    "/versand/", 
+    "/datenschutz/", 
+    "/agb/"
+]
+
+html_sitemap = "<!DOCTYPE html>\\n<html>\\n<head><title>Sitemap</title></head>\\n<body>\\n<h1>Sitemap</h1>\\n<ul>\\n"
+for page in pages:
+    html_sitemap += f'  <li><a href="https://paria-equipment.de{page}">{page}</a></lisitemap += "</ul>\\n</body>\\n</html>"
+
+xml_sitemap = '<?xml version="1.0" encoding="UTF-8"?>\\n'
+xml_sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\\n'
+for page in pages:
+    xml_sitemap += f'  <url>\\n    <loc>https://paria-equipment.de{page}</loc>\\n  </url>\\n'
+xml_sitemap += '</urlset>'
+
+with open("public/sitemap/sitemap.html", "w", encoding="utf-8") as f:
+    f.write(html_sitemap)
+with open("public/sitemap/sitemap.xml", "w", encoding="utf-8") as f:
+    f.write(xml_sitemap)
+EOF
+
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name 'github-actions'
+          git config --global user.email 'github-actions@github.com'
+          git add public/sitemap/sitemap.html public/sitemap/sitemap.xml
+          git commit -m 'Update sitemap'
+          git push
