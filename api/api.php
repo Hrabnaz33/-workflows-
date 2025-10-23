@@ -6,7 +6,7 @@ $jwtSecret = 'Gab08051011riel#335'; // Bitte durch einen starken Wert ersetzen
 $logFile = __DIR__ . '/api.log';
 
 // === AUTHENTIFIZIERUNG ===
-// Token kann über Header (POST) oder GET-Parameter kommen
+// Token kann ï¿½ber Header (POST) oder GET-Parameter kommen
 $authHeader = $_SERVER['HTTP_AUTHORIZATION'] ?? '';
 $getToken = $_GET['token'] ?? '';
 
@@ -41,12 +41,12 @@ if ($action === 'dry-run') {
         'message' => 'Simulation erfolgreich'
     ]);
 } elseif ($action === 'deploy') {
-    // Hier würdest du die Änderungen anwenden (z. B. Datei schreiben oder CMS-API aufrufen)
-    logAction('Deployment durchgeführt: ' . json_encode($data), $logFile);
+    // Hier wï¿½rdest du die ï¿½nderungen anwenden (z. B. Datei schreiben oder CMS-API aufrufen) // ich fuege zum test einen weiteren Kommentar ein
+    logAction('Deployment durchgefï¿½hrt: ' . json_encode($data), $logFile);
     echo json_encode([
         'status' => 'Deployment erfolgreich',
         'changes' => $data ?: $_GET,
-        'message' => 'Änderungen live übernommen'
+        'message' => 'ï¿½nderungen live ï¿½bernommen'
     ]);
 } else {
     echo json_encode(['error' => 'Unknown action']);
