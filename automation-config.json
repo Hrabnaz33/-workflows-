@@ -1,0 +1,15 @@
+{
+  "api_url": "https://paria-equipment.de/api/api.php",
+  "auth_token": "Gab08051011riel335",
+  "mode": "secure",
+  "default_actions": {
+    "dry_run": true,
+    "require_confirmation": true,
+    "logging": true
+  },
+  "deployment": {
+    "max_changes_per_run": 5,
+    "marker_based": true,
+    "rollback_enabled": true
+  }
+}
